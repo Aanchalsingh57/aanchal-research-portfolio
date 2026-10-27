@@ -1,0 +1,39 @@
+
+{% extends 'base.html' %}
+
+{% block title %}Academic CV | Aanchal Singh{% endblock %}
+
+{% block content %}
+<div class="container page reading">
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+        <a href="/">Home</a> / Academic CV
+    </nav>
+
+    <p class="eyebrow">ACADEMIC RESUME</p>
+    <h1>Academic CV</h1>
+
+    {% if profile and profile.cv_summary %}
+        <p class="prose">{{ profile.cv_summary }}</p>
+    {% endif %}
+
+    {% if profile and profile.cv_path %}
+        <p>
+            <a
+                class="button"
+                href="{{ cv_download_url or url_for('public.cv_download') }}"
+            >
+                Download Aanchal’s CV (PDF) ↓
+            </a>
+        </p>
+
+        <p class="muted">
+            PDF document · Download and open with your preferred PDF reader.
+            For document safety, embedded PDF previews are disabled.
+        </p>
+    {% else %}
+        <p class="muted">
+            The academic CV is not currently available.
+        </p>
+    {% endif %}
+</div>
+{% endblock %}

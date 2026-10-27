@@ -1,0 +1,65 @@
+
+{% extends 'admin/base.html' %}
+
+{% block admin_content %}
+<p class="eyebrow">YOUR ACADEMIC WORKSPACE</p>
+
+<h1>Make room for discovery.</h1>
+
+<p class="lead">
+  Keep the portfolio accurate, current, and distinctly yours.
+</p>
+
+<div class="admin-notice">
+  The starting profile contains only supplied academic facts and editable draft
+  biography copy. No skills, research results, publications, or achievements
+  have been invented. Review the copy before launch.
+</div>
+
+<div class="stats">
+  <a class="card card-body" href="{{ url_for('admin.content', kind='projects') }}">
+    <strong>{{ stats.projects }}</strong>
+    <span>Projects</span>
+  </a>
+
+  <a class="card card-body" href="{{ url_for('admin.content', kind='publications') }}">
+    <strong>{{ stats.publications }}</strong>
+    <span>Research outputs</span>
+  </a>
+
+  <a class="card card-body" href="{{ url_for('admin.messages') }}">
+    <strong>{{ unread }}</strong>
+    <span>Unread messages</span>
+  </a>
+</div>
+
+<h2>Profile onboarding</h2>
+
+<p class="muted">
+  Optional content can remain empty. Completed entries still deserve a
+  personal review.
+</p>
+
+<div class="checklist">
+  {% for item in checklist %}
+    {% set label = item[0] %}
+    {% set done = item[1] %}
+    {% set target = item[2] %}
+    {% set kwargs = item[3] if item|length > 3 else {} %}
+
+    <a href="{{ url_for(target, **kwargs) }}">
+      <span class="check-state">{{ '✓' if done else '○' }}</span>
+      {{ label }}
+      <span>{{ 'Added' if done else 'Add details ↗' }}</span>
+    </a>
+  {% endfor %}
+</div>
+
+<div class="admin-notice">
+  <strong>Privacy maintenance:</strong>
+  review messages regularly and run
+  <code>flask --app wsgi prune-private-data</code>
+  to apply the 90-day retention policy. See the README for backups and
+  scheduling.
+</div>
+{% endblock %}

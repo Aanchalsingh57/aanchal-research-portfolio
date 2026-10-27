@@ -1,0 +1,83 @@
+{
+  "base_url": "http://127.0.0.1:8001",
+  "viewports": [
+    {
+      "width": 1440,
+      "height": 1100,
+      "routes_ok": 8,
+      "horizontal_overflow": false
+    },
+    {
+      "width": 768,
+      "height": 1024,
+      "routes_ok": 8,
+      "horizontal_overflow": false
+    },
+    {
+      "width": 390,
+      "height": 844,
+      "routes_ok": 8,
+      "horizontal_overflow": false
+    },
+    {
+      "width": 320,
+      "height": 740,
+      "routes_ok": 8,
+      "horizontal_overflow": false
+    }
+  ],
+  "browser_errors": [],
+  "accessibility": [
+    {
+      "page": "home",
+      "width": 1440,
+      "violations": []
+    },
+    {
+      "page": "/contact",
+      "width": 1440,
+      "violations": []
+    },
+    {
+      "page": "/admin/login",
+      "width": 1440,
+      "violations": []
+    },
+    {
+      "page": "home",
+      "width": 768,
+      "violations": []
+    },
+    {
+      "page": "home",
+      "width": 390,
+      "violations": []
+    },
+    {
+      "page": "/contact",
+      "width": 390,
+      "violations": []
+    },
+    {
+      "page": "/admin/login",
+      "width": 390,
+      "violations": []
+    },
+    {
+      "page": "home",
+      "width": 320,
+      "violations": []
+    },
+    {
+      "page": "admin-dashboard",
+      "width": 1440,
+      "violations": []
+    }
+  ],
+  "no_javascript_navigation": true,
+  "reduced_motion": true,
+  "csrf_contact_submission": true,
+  "admin_login_and_private_draft": true,
+  "admin_logout": true,
+  "axe_violations_total": 0
+}

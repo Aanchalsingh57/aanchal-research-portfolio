@@ -1,0 +1,17 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>{% block title %}Aanchal Singh | Biotechnology Research and AI/ML{% endblock %}</title>
+<meta name="description" content="{% block description %}Academic portfolio of Aanchal Singh, an M.Tech Biotechnology student at NIT Jalandhar interested in biotechnology research and AI/ML applications in life sciences.{% endblock %}">
+<meta property="og:type" content="website"><meta property="og:title" content="{{ self.title()|striptags }}"><meta property="og:description" content="{{ self.description()|striptags }}"><meta property="og:image" content="{{ (config.BASE_URL or '') ~ url_for('static', filename='images/social-card.png') }}"><meta name="twitter:card" content="summary_large_image">
+{% if canonical_url %}<link rel="canonical" href="{{ canonical_url }}"><meta property="og:url" content="{{ canonical_url }}">{% endif %}
+{% if not site_indexable or request.path.startswith('/admin') or preview|default(false) %}<meta name="robots" content="noindex,nofollow">{% endif %}
+<link rel="icon" href="{{ url_for('static',filename='images/favicon.svg') }}" type="image/svg+xml"><link rel="stylesheet" href="{{ url_for('static',filename='css/style.css') }}"><script src="{{ url_for('static',filename='js/main.js') }}" defer></script>
+{% block head %}{% endblock %}</head><body>
+<a class="skip" href="#main">Skip to main content</a>
+<header class="site-header"><div class="container nav-wrap"><a class="brand" href="{{ url_for('public.index') }}"><span class="brand-mark" aria-hidden="true">AS<span>·</span></span><span>Aanchal Singh<small>BIOTECHNOLOGY &amp; AI/ML</small></span></a>
+<button class="menu-toggle" type="button" aria-expanded="false" aria-controls="navigation">Menu <span aria-hidden="true">☰</span></button>
+<nav id="navigation" aria-label="Main navigation">{% if sections.about %}<a href="{{ url_for('public.index') }}#about">About</a>{% endif %}{% if sections.interests %}<a href="{{ url_for('public.index') }}#research">Research</a>{% endif %}{% if sections.projects %}<a href="{{ url_for('public.listing',kind='projects') }}">Projects</a>{% endif %}{% if sections.education %}<a href="{{ url_for('public.index') }}#education">Education</a>{% endif %}{% if sections.contact %}<a class="nav-contact" href="{{ url_for('public.contact') }}">Get in touch <span aria-hidden="true">↗</span></a>{% endif %}</nav></div></header>
+{% with messages=get_flashed_messages(with_categories=true) %}{% if messages %}<div class="container notices" role="status">{% for category,message in messages %}<p class="notice {{ category }}">{{ message }}</p>{% endfor %}</div>{% endif %}{% endwith %}
+<main id="main">{% block content %}{% endblock %}</main>
+<footer class="site-footer"><div class="container footer-grid"><div><a class="footer-name" href="{{ url_for('public.index') }}">Aanchal Singh<span>·</span></a><p>Biotechnology Research | AI/ML in Life Sciences</p><p class="muted">National Institute of Technology Jalandhar</p></div><div class="footer-links">{% for link in links %}<a href="{{ link.url }}" rel="noopener noreferrer">{{ link.label }} ↗</a>{% endfor %}<a href="{{ url_for('public.privacy') }}">Privacy</a><a href="{{ url_for('admin.dashboard') }}">Admin</a></div></div><div class="container footer-bottom"><span>© {{ current_year }} Aanchal Singh</span><span>Biological questions. Computational possibilities.</span></div></footer>
+</body></html>

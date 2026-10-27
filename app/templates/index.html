@@ -1,0 +1,426 @@
+
+{% extends 'base.html' %}
+{% from 'macros.html' import project_card, publication_card, note_card, education_timeline %}
+
+{% block content %}
+<section class="hero">
+  <div class="container hero-grid">
+    <div class="hero-copy">
+      <p class="eyebrow">
+        <span class="dot" aria-hidden="true"></span>
+        {{ profile.degree|upper if profile else 'M.TECH BIOTECHNOLOGY' }}
+        · {{ profile.institution if profile else 'NIT Jalandhar' }}
+      </p>
+
+      <h1>Biological questions.<br><em>Intelligent</em><br>possibilities.</h1>
+
+      <div class="hero-identity">
+        <span class="mini-rule" aria-hidden="true"></span>
+        <div>
+          <h2>{{ profile.name if profile else 'Aanchal Singh' }}</h2>
+          <p>{{ profile.headline if profile else 'Biotechnology Research | AI/ML in Life Sciences' }}</p>
+        </div>
+      </div>
+
+      {% if profile %}
+      <p class="intro">{{ profile.introduction }}</p>
+      {% endif %}
+
+      <div class="actions">
+        {% if sections.interests %}
+        <a class="button" href="#research">Explore research <span aria-hidden="true">↗</span></a>
+        {% endif %}
+
+        {% if sections.projects %}
+        <a class="button secondary" href="/projects">View projects <span aria-hidden="true">→</span></a>
+        {% endif %}
+
+        {% if sections.cv and cv_available %}
+        <a class="text-link" href="{{ url_for('public.cv') }}">
+          Download CV ↓
+        </a>
+        {% endif %}
+      </div>
+    </div>
+
+    <aside class="hero-lab" aria-label="Research perspective">
+      <div class="panel-top">
+        <span class="tiny-label">AN INTERDISCIPLINARY PERSPECTIVE</span>
+        <span class="panel-dot" aria-hidden="true"></span>
+      </div>
+
+      <img
+        class="profile-photo"
+        src="{{ url_for('static', filename='images/aanchal-profile.jpg') }}"
+        alt="Aanchal Singh"
+        width="460"
+        height="300"
+      >
+
+      <div class="panel-note">
+        <span class="tiny-label">RESEARCH DIRECTION</span>
+        <h3>At the intersection<br>of life sciences &amp; AI.</h3>
+        <p>Connecting biological insight with computational thinking.</p>
+      </div>
+
+      <div class="panel-bottom">
+        <span>Biotechnology</span>
+        <span aria-hidden="true">↔</span>
+        <span>Artificial intelligence</span>
+      </div>
+    </aside>
+  </div>
+
+  <div class="container hero-bottom">
+    <span>RESEARCH-ORIENTED. INTERDISCIPLINARY. CURIOUS.</span>
+    <a href="#about">Discover more <span aria-hidden="true">↓</span></a>
+  </div>
+</section>
+
+{% if sections.about and profile %}
+<section id="about" class="section">
+  <div class="container split">
+    <div>
+      <p class="eyebrow section-index">01 / ABOUT</p>
+      <h2 class="section-title">A foundation in biology.<br>A curiosity for <em>what’s next.</em></h2>
+    </div>
+
+    <div class="about-copy">
+      <p class="lead">{{ profile.tagline }}</p>
+      <div class="prose">{{ profile.biography }}</div>
+
+      {% if profile.current_research %}
+      <h3>Current research</h3>
+      <p class="prose">{{ profile.current_research }}</p>
+      {% endif %}
+
+      <dl class="fact-list">
+        <div><dt>Current programme</dt><dd>{{ profile.degree }}</dd></div>
+        <div><dt>Institution</dt><dd>{{ profile.institution }}</dd></div>
+
+        {% if profile.specialization %}
+        <div><dt>Specialization</dt><dd>{{ profile.specialization }}</dd></div>
+        {% endif %}
+
+        {% if profile.supervisor %}
+        <div><dt>Supervisor</dt><dd>{{ profile.supervisor }}</dd></div>
+        {% endif %}
+
+        {% if profile.laboratory %}
+        <div><dt>Laboratory</dt><dd>{{ profile.laboratory }}</dd></div>
+        {% endif %}
+
+        {% if profile.expected_graduation %}
+        <div><dt>Expected graduation</dt><dd>{{ profile.expected_graduation }}</dd></div>
+        {% endif %}
+      </dl>
+
+      <a class="text-link" href="{{ url_for('public.about') }}">Academic profile ↗</a>
+    </div>
+  </div>
+</section>
+{% endif %}
+
+{% if sections.interests and interests %}
+<section id="research" class="section tinted">
+  <div class="container">
+    <div class="section-heading">
+      <div>
+        <p class="eyebrow section-index">02 / RESEARCH INTERESTS</p>
+        <h2 class="section-title">Questions worth <em>exploring.</em></h2>
+      </div>
+      <p>Academic interests and future directions—not claims of completed research.</p>
+    </div>
+
+    <div class="cards">
+      {% for interest in interests %}
+      <article class="card interest-card">
+        <span class="card-number">{{ '%02d'|format(loop.index) }}</span>
+        <h3>{{ interest.title }}</h3>
+        <p>{{ interest.description }}</p>
+
+        {% if interest.motivation %}
+        <p class="muted">{{ interest.motivation }}</p>
+        {% endif %}
+
+        <a class="text-link" href="{{ url_for('public.interest', interest_id=interest.id) }}">Explore this interest ↗</a>
+      </article>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endif %}
+
+{% if sections.projects %}
+<section id="projects" class="section">
+  <div class="container">
+    <div class="section-heading">
+      <div>
+        <p class="eyebrow section-index">03 / RESEARCH PROJECTS</p>
+        <h2 class="section-title">From questions<br>to <em>investigation.</em></h2>
+      </div>
+      <a class="text-link" href="/projects">All projects ↗</a>
+    </div>
+
+    {% if projects %}
+    <div class="cards">
+      {% for p in projects %}
+      {{ project_card(p) }}
+      {% endfor %}
+    </div>
+    {% else %}
+    <div class="empty-state">
+      <span class="empty-symbol" aria-hidden="true">↗</span>
+      <div>
+        <h3>A space for research in progress.</h3>
+        <p>Project details will be shared when verified research content is available.</p>
+      </div>
+      <span class="pill">Research portfolio</span>
+    </div>
+    {% endif %}
+  </div>
+</section>
+{% endif %}
+
+{% if sections.aiml %}
+<section id="aiml" class="section dark-section">
+  <div class="container">
+    <div class="split">
+      <div>
+        <p class="eyebrow">04 / BIOLOGY MEETS COMPUTATION</p>
+        <h2 class="section-title">Better questions.<br>Complementary <em>methods.</em></h2>
+      </div>
+      <div>
+        <p class="lead">An interest in AI/ML-driven biological discovery.</p>
+        <p>Computational methods can complement experiments, help identify patterns in biological data, and support hypothesis generation.</p>
+        <p class="scientific-note">Computational predictions are not equivalent to experimental confirmation. The workflow below is conceptual, not a record of completed work.</p>
+      </div>
+    </div>
+
+    <div class="workflow-heading">
+      <h3>A biological question → a testable hypothesis</h3>
+      <p>Explore the stages of a conceptual research workflow.</p>
+    </div>
+
+    <ol class="workflow">
+      {% for title, body in [
+        ('Biological question', 'Define a specific biological question and a falsifiable hypothesis.'),
+        ('Data collection', 'Identify suitable data sources, permissions, and provenance.'),
+        ('Data preprocessing', 'Check quality, handle missingness, and prevent information leakage.'),
+        ('Feature extraction', 'Select representations suitable for the biological problem.'),
+        ('Model development', 'Develop a model with appropriately separated training data.'),
+        ('Evaluation & validation', 'Assess generalization, uncertainty, and potential bias.'),
+        ('Biological interpretation', 'Interpret predictions in the context of biological knowledge.'),
+        ('Experimental validation', 'Where applicable, test computational hypotheses experimentally.')
+      ] %}
+      <li>
+        <details>
+          <summary><span class="step">{{ '%02d'|format(loop.index) }}</span>{{ title }}</summary>
+          <p>{{ body }}</p>
+        </details>
+      </li>
+      {% endfor %}
+    </ol>
+
+    {% if topics %}
+    <div class="cards topic-cards">
+      {% for topic in topics %}
+      <article class="card card-body">
+        <h3><a href="{{ url_for('public.interest', interest_id=topic.id) }}">{{ topic.title }}</a></h3>
+        <p>{{ topic.description }}</p>
+      </article>
+      {% endfor %}
+    </div>
+    {% endif %}
+  </div>
+</section>
+{% endif %}
+
+{% if sections.skills and skills %}
+<section id="skills" class="section">
+  <div class="container">
+    <p class="eyebrow">SKILLS &amp; METHODS</p>
+    <h2 class="section-title">A growing research toolkit.</h2>
+
+    <div class="cards">
+      {% for category, items in skills|groupby('category') %}
+      <article class="card card-body">
+        <h3>{{ category }}</h3>
+
+        {% for skill in items %}
+        <div class="skill">
+          <strong>{{ skill.name }}</strong>
+
+          {% if skill.proficiency %}
+          <span class="pill">{{ skill.proficiency }}</span>
+          {% endif %}
+
+          {% if skill.description %}
+          <p>{{ skill.description }}</p>
+          {% endif %}
+
+          {% if skill.project and skill.project.is_published and sections.projects %}
+          <a class="text-link" href="{{ url_for('public.project_detail', slug=skill.project.slug) }}">Related project ↗</a>
+          {% endif %}
+        </div>
+        {% endfor %}
+      </article>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endif %}
+
+{% if sections.experience and experiences %}
+<section id="experience" class="section tinted">
+  <div class="container">
+    <p class="eyebrow">RESEARCH &amp; ACADEMIC EXPERIENCE</p>
+    <h2 class="section-title">Learning through investigation.</h2>
+
+    <div class="timeline">
+      {% for e in experiences %}
+      <article class="timeline-item">
+        <p class="eyebrow">{{ e.start_date }}{% if e.end_date %} — {{ e.end_date }}{% endif %}</p>
+        <h3>{{ e.role }}</h3>
+        <p>{{ e.organization }}{% if e.department %} · {{ e.department }}{% endif %}</p>
+
+        {% if e.supervisor %}
+        <p>Supervisor: {{ e.supervisor }}</p>
+        {% endif %}
+
+        {% for f in ['description', 'responsibilities', 'techniques', 'outcomes'] %}
+          {% if e[f] %}
+          <p class="prose">{{ e[f] }}</p>
+          {% endif %}
+        {% endfor %}
+
+        {% if e.project and e.project.is_published and sections.projects %}
+        <a class="text-link" href="{{ url_for('public.project_detail', slug=e.project.slug) }}">Related project ↗</a>
+        {% endif %}
+      </article>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endif %}
+
+{% if sections.education and education %}
+<section id="education" class="section">
+  <div class="container split">
+    <div>
+      <p class="eyebrow section-index">05 / EDUCATION</p>
+      <h2 class="section-title">An academic path<br>towards <em>discovery.</em></h2>
+      <p class="muted">Building a foundation for further doctoral study.</p>
+    </div>
+    <div>{{ education_timeline(education) }}</div>
+  </div>
+</section>
+{% endif %}
+
+{% if sections.publications and publications %}
+<section id="publications" class="section tinted">
+  <div class="container">
+    <div class="section-heading">
+      <div>
+        <p class="eyebrow">PUBLICATIONS &amp; OUTPUTS</p>
+        <h2 class="section-title">Sharing scientific work.</h2>
+      </div>
+      <a class="text-link" href="/publications">All outputs ↗</a>
+    </div>
+
+    <div class="cards">
+      {% for p in publications %}
+      {{ publication_card(p) }}
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endif %}
+
+{% if sections.achievements and achievements %}
+<section id="achievements" class="section">
+  <div class="container">
+    <p class="eyebrow">ACADEMIC MILESTONES</p>
+    <h2 class="section-title">Along the way.</h2>
+
+    <div class="cards">
+      {% for a in achievements %}
+      <article class="card card-body">
+        <p class="eyebrow">{{ a.date }}{% if a.category %} · {{ a.category }}{% endif %}</p>
+        <h3>{{ a.title }}</h3>
+        <p>{{ a.organization }}</p>
+        <p class="prose">{{ a.description }}</p>
+
+        {% if a.evidence_url %}
+        <a class="text-link" href="{{ a.evidence_url }}" rel="noopener noreferrer">Supporting evidence ↗</a>
+        {% endif %}
+      </article>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endif %}
+
+{% if sections.cv and cv_available %}
+<section id="cv" class="section tinted">
+  <div class="container split">
+    <div>
+      <p class="eyebrow">ACADEMIC CV</p>
+      <h2 class="section-title">The academic overview.</h2>
+    </div>
+
+    <div>
+      {% if profile.cv_summary %}
+      <p class="prose">{{ profile.cv_summary }}</p>
+      {% endif %}
+
+      <a class="button"
+         href="{{ url_for('public.cv') }}">
+        View CV ↗
+      </a>
+
+      <a class="button secondary"
+         href="{{ url_for('public.cv_download') }}">
+        Download PDF ↓
+      </a>
+    </div>
+  </div>
+</section>
+{% endif %}
+
+{% if sections.notes and notes %}
+<section id="notes" class="section">
+  <div class="container">
+    <div class="section-heading">
+      <div>
+        <p class="eyebrow">RESEARCH NOTES</p>
+        <h2 class="section-title">Thinking, reading, learning.</h2>
+      </div>
+      <a class="text-link" href="/notes">All notes ↗</a>
+    </div>
+
+    <div class="cards">
+      {% for n in notes %}
+      {{ note_card(n) }}
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endif %}
+
+{% if sections.contact %}
+<section class="contact-band">
+  <div class="container split">
+    <div>
+      <p class="eyebrow">LET’S CONNECT</p>
+      <h2 class="section-title">Good research starts<br>with a <em>conversation.</em></h2>
+    </div>
+    <div>
+      <p>{{ profile.collaboration if profile and profile.collaboration else 'For academic enquiries and conversations about biotechnology research and computational approaches to biological problems.' }}</p>
+      <a class="button" href="{{ url_for('public.contact') }}">Get in touch ↗</a>
+    </div>
+  </div>
+</section>
+{% endif %}
+{% endblock %}
+```
