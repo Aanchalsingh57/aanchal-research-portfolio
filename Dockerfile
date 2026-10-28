@@ -9,3 +9,4 @@ RUN mkdir -p /srv/portfolio/instance && chown portfolio:portfolio /srv/portfolio
 USER portfolio
 EXPOSE 8000
 CMD ["bash", "scripts/start.sh"]
+
